@@ -1,6 +1,14 @@
+import {useContext} from "react";
+
+import UserContext from "./../assets/contexts/UserContext";
+
 function Header(){
+    const {visibility} = useContext(UserContext);
+    
     return(
-        <h1>Topo</h1>
+        visibility ?
+        <h1>Topo</h1> :
+        <></>
     )
 }
 

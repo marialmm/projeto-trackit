@@ -73,6 +73,28 @@ const GlobalStyle = createGlobalStyle`
         width: 100%;
         height: 100%;
     }
+
+    input {
+        margin-bottom: 6px;
+        padding: 10px;
+        border: 1px solid #d5d5d5;
+        border-radius: 5px;
+        color: var(--gray);
+    }
+
+    input::placeholder {
+        color: #DBDBDB;
+        font-size: 20px;
+    }
+
+    input:disabled {
+        background-color: #F2F2F2;
+        color: #AFAFAF;
+    }
+
+    button:disabled{
+        opacity: 0.7;
+    }
 `;
 
 export default GlobalStyle;

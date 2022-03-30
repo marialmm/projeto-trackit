@@ -1,6 +1,14 @@
+import {useContext} from "react";
+
+import UserContext from "./../assets/contexts/UserContext"
+
 function Menu(){
+    const {visibility} = useContext(UserContext);
+
     return(
-        <h1>Menu</h1>
+        visibility ? 
+        <h1>Menu</h1> : 
+        <></>
     )
 }
 

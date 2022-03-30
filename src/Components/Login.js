@@ -1,7 +1,8 @@
 import axios from "axios";
 import styled from "styled-components";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { ThreeDots } from "react-loader-spinner";
 
 import logo from "./../assets/midias/Logo.png";
 
@@ -10,20 +11,26 @@ function Login() {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const URL =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
 
   function sendInputData(e) {
     e.preventDefault();
-    const promise = axios.post(URL, user);
-    promise.then((data) => {
-      console.log(data);
-    });
-    promise.catch((err) => {
-      window.alert("Email ou senha incorretos");
-      console.log(err.response.status)
-    });
+      setLoading(true);
+      const promise = axios.post(URL, user);
+      promise.then((response) => {
+        localStorage.setItem("token", response.data.token);
+        navigate("/hoje")
+
+      });
+      promise.catch((err) => {
+        window.alert("Email ou senha incorretos");
+        console.log(`${err.response.status} - ${err.response.statusText}`);
+        setLoading(false);
+      });
   }
 
   return (
@@ -35,14 +42,20 @@ function Login() {
           placeholder="email"
           onChange={(e) => setUser({ ...user, email: e.target.value })}
           value={user.email}
+          disabled={loading}
+          required
         />
         <input
           type="password"
           placeholder="senha"
           onChange={(e) => setUser({ ...user, password: e.target.value })}
           value={user.password}
+          disabled={loading}
+          required
         />
-        <button type="submit">Entrar</button>
+        <button disabled={loading} type="submit">
+          {!loading ? "Entrar" : <ThreeDots color="#FFFFFF" />}
+        </button>
       </form>
       <Link to="/cadastro">
         <p>Não tem uma conta? Cadastre-se</p>
@@ -94,6 +107,9 @@ const Div = styled.div`
     color: #ffffff;
     font-size: 21px;
     margin-bottom: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   p {

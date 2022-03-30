@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState, useContext } from "react";
 
 import Login from "./Login";
 import Register from "./Register";
@@ -11,20 +12,22 @@ import GlobalStyle from "./../assets/globalStyle/globalStyle";
 import UserContext from "./../assets/contexts/UserContext";
 
 function App() {
+  const [visibility, setVisibility] = useState(false);
+
   return (
     <>
       <GlobalStyle />
-      <UserContext.Provider value={""} >
+      <UserContext.Provider value={{ visibility, setVisibility }}>
         <BrowserRouter>
-            <Header />
-            <Routes>
+          <Header />
+          <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/cadastro" element={<Register />} />
             <Route path="/habitos" element={<Habits />} />
             <Route path="/hoje" element={<Today />} />
             <Route path="/historico" element={<History />} />
-            </Routes>
-            <Menu />
+          </Routes>
+          <Menu />
         </BrowserRouter>
       </UserContext.Provider>
     </>
