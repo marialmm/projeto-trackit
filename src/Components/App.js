@@ -7,24 +7,28 @@ import Today from "./Today";
 import History from "./History";
 import Header from "./Header";
 import Menu from "./Menu";
+import GlobalStyle from "./../assets/globalStyle/globalStyle";
+import UserContext from "./../assets/contexts/UserContext";
 
-import "./../assets/css/reset.css";
-import "./../assets/css/style.css";
-
-function App(){
-    return(
+function App() {
+  return (
+    <>
+      <GlobalStyle />
+      <UserContext.Provider value={""} >
         <BrowserRouter>
             <Header />
             <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/cadastro" element={<Register />} />
-                <Route path="/habitos" element={<Habits />} />
-                <Route path="/hoje" element={<Today />} />
-                <Route path="/historico" element={<History />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/cadastro" element={<Register />} />
+            <Route path="/habitos" element={<Habits />} />
+            <Route path="/hoje" element={<Today />} />
+            <Route path="/historico" element={<History />} />
             </Routes>
             <Menu />
         </BrowserRouter>
-    )
+      </UserContext.Provider>
+    </>
+  );
 }
 
 export default App;
