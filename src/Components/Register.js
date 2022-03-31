@@ -29,7 +29,7 @@ function Register() {
     });
     promise.catch((err) => {
         console.log(`${err.response.status} - ${err.response.statusText}`);
-        window.alert('Erro no cadastro');
+        alert('Erro no cadastro');
         setLoading(false);
     })
   }
@@ -79,7 +79,7 @@ function Register() {
           required
         />
         <button disabled={loading} type="submit">
-          {!loading ? "Cadastrar" : <ThreeDots color="#FFFFFF" />}
+          {!loading ? "Cadastrar" : <ThreeDots color="#FFFFFF" width={60} />}
         </button>
       </form>
       <Link to="/">

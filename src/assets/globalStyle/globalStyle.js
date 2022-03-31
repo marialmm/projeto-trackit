@@ -67,6 +67,7 @@ const GlobalStyle = createGlobalStyle`
     body{
         width: 100vw;
         height: 100vh;
+        background-color: #F2F2F2;
     }
 
     .root{
@@ -92,9 +93,30 @@ const GlobalStyle = createGlobalStyle`
         color: #AFAFAF;
     }
 
+    input:focus{
+        border-color: #d5d5d5;
+    }
+
     button:disabled{
         opacity: 0.7;
     }
+
+    main{
+        margin: 70px 0;
+        padding: 28px 17px;
+    }
+
+    h1{
+        font-size: 23px;
+        line-height: 29px;
+        color: var(--dark-blue);
+    }
+
+p{
+  color: var(--gray);
+  font-size: 18px;
+  line-height: 22px;
+}
 `;
 
 export default GlobalStyle;

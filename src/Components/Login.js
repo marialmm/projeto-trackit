@@ -1,10 +1,12 @@
 import axios from "axios";
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 
+import UserContext from "./../assets/contexts/UserContext";
 import logo from "./../assets/midias/Logo.png";
+
 
 function Login() {
   const [user, setUser] = useState({
@@ -12,6 +14,9 @@ function Login() {
     password: "",
   });
   const [loading, setLoading] = useState(false);
+
+  const {setVisibility} = useContext(UserContext);
+  setVisibility(false);
   const navigate = useNavigate();
 
   const URL =
@@ -23,11 +28,12 @@ function Login() {
       const promise = axios.post(URL, user);
       promise.then((response) => {
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("image", response.data.image);
         navigate("/hoje")
 
       });
       promise.catch((err) => {
-        window.alert("Email ou senha incorretos");
+        alert("Email ou senha incorretos");
         console.log(`${err.response.status} - ${err.response.statusText}`);
         setLoading(false);
       });
@@ -54,7 +60,7 @@ function Login() {
           required
         />
         <button disabled={loading} type="submit">
-          {!loading ? "Entrar" : <ThreeDots color="#FFFFFF" />}
+          {!loading ? "Entrar" : <ThreeDots color="#FFFFFF" width={60} />}
         </button>
       </form>
       <Link to="/cadastro">

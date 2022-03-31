@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState } from "react";
 
 import Login from "./Login";
 import Register from "./Register";
@@ -13,11 +13,41 @@ import UserContext from "./../assets/contexts/UserContext";
 
 function App() {
   const [visibility, setVisibility] = useState(false);
+  const weekdays = [
+    {
+      id: 0,
+      name: "D",
+    },
+    {
+      id: 1,
+      name: "S",
+    },
+    {
+      id: 2,
+      name: "T",
+    },
+    {
+      id: 3,
+      name: "Q",
+    },
+    {
+      id: 4,
+      name: "Q",
+    },
+    {
+      id: 5,
+      name: "S",
+    },
+    {
+      id: 6,
+      name: "S",
+    },
+  ];
 
   return (
     <>
       <GlobalStyle />
-      <UserContext.Provider value={{ visibility, setVisibility }}>
+      <UserContext.Provider value={{ visibility, setVisibility, weekdays }}>
         <BrowserRouter>
           <Header />
           <Routes>
