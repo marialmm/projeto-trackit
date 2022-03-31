@@ -37,11 +37,9 @@ function Habits() {
   }, []);
 
   function createHabit(habit) {
-    console.log(habit);
     const promise = axios.post(URL, habit, config);
     promise.then((response) => {
-      console.log(response.data);
-      setHabits([...habits, response.data]);
+      requestHabits();
       setCreate(false);
       setLoading(false);
     });

@@ -43,11 +43,12 @@ function App() {
       name: "S",
     },
   ];
+  const [progress, setProgress] = useState(0);
 
   return (
     <>
       <GlobalStyle />
-      <UserContext.Provider value={{ visibility, setVisibility, weekdays }}>
+      <UserContext.Provider value={{ visibility, setVisibility, weekdays, progress, setProgress }}>
         <BrowserRouter>
           <Header />
           <Routes>
