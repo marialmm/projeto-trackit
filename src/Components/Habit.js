@@ -1,14 +1,21 @@
 import styled from "styled-components";
 import { useContext, useState } from "react";
+import { BsTrash } from "react-icons/bs";
+import axios from "axios";
 
 import UserContext from "./../assets/contexts/UserContext";
 
-function Habit({ name, days }) {
+function Habit({ habit, deleteHabit }) {
   const { weekdays } = useContext(UserContext);
 
+  const {name, id, days} = habit 
+  
   return (
     <Section>
       <p>{name}</p>
+      <BsTrash className="trash" onClick={()=>{
+        if (window.confirm('Tem certeza que deseja apagar o hábito?')) deleteHabit(id)}}
+         />
       <div>
         {weekdays.map((day) => {
           return (
@@ -35,12 +42,21 @@ const Section = styled.section`
   background-color: #ffffff;
   border-radius: 5px;
   padding: 15px;
+  position: relative;
 
   & > div {
     display: flex;
     width: 234px;
     justify-content: space-between;
     margin-top: 8px;
+  }
+
+  svg.trash {
+    position: absolute;
+    color: var(--gray);
+    font-size: 20px;
+    right: 10px;
+    top: 11px;
   }
 `;
 

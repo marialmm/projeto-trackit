@@ -94,7 +94,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     input:focus{
-        border-color: #d5d5d5;
+        outline: none;
     }
 
     button:disabled{
@@ -103,7 +103,7 @@ const GlobalStyle = createGlobalStyle`
 
     main{
         margin: 70px 0;
-        padding: 28px 17px;
+        padding: 28px 17px 70px;
     }
 
     h1{

@@ -1,6 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { BsFillPlusSquareFill } from "react-icons/bs";
 
 import UserContext from "./../assets/contexts/UserContext";
 import Habit from "./Habit";
@@ -19,33 +20,20 @@ function Habits() {
     headers: { Authorization: `Bearer ${TOKEN}` },
   };
 
-  useEffect(() => {
-    setVisibility(true);
+  function requestHabits() {
     const promise = axios.get(URL, config);
     promise.then((response) => {
-      console.log(response.data);
       setHabits(response.data);
-      console.log(habits);
     });
     promise.catch((err) => {
       console.log(`${err.response.status} - ${err.response.statusText}`);
       alert("Um erro aconteceu, tente novamente");
     });
+  }
 
-    // const test = [
-    //   {
-    //     id: 1,
-    //     name: "Nome do hábito",
-    //     days: [1, 3, 5]
-    //   },
-    //   {
-    //     id: 2,
-    //     name: "Nome do hábito 2",
-    //     days: [1, 3, 4, 6]
-    //   }
-    // ];
-
-    // setHabits(test);
+  useEffect(() => {
+    setVisibility(true);
+    requestHabits();
   }, []);
 
   function createHabit(habit) {
@@ -55,8 +43,25 @@ function Habits() {
       console.log(response.data);
       setHabits([...habits, response.data]);
       setCreate(false);
-      setLoading(false)
-    })
+      setLoading(false);
+    });
+    promise.catch((err) => {
+      console.log(`${err.response.status} - ${err.response.statusText}`);
+      alert("Um erro aconteceu, tente novamente");
+      setLoading(false);
+    });
+  }
+
+  function deleteHabit(id) {
+    const URLDelete = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`
+    const promise = axios.delete(URLDelete, config);
+    promise.then(() => {
+      requestHabits();
+    });
+    promise.catch((err) => {
+      console.log(`${err.response.status} - ${err.response.statusText}`);
+      alert("Um erro aconteceu, tente novamente");
+    });
   }
 
   return habits[0] === "empty" ? (
@@ -65,19 +70,25 @@ function Habits() {
     <Main>
       <div>
         <h1>Meus Hábitos</h1>
-        <div className="button" onClick={() => setCreate(true)}>
-          <ion-icon name="add-sharp"></ion-icon>
-        </div>
+        <BsFillPlusSquareFill onClick={() => setCreate(true)} />
       </div>
-      <NewHabit create={create} setCreate={setCreate} createHabit={createHabit} loading={loading} setLoading={setLoading} />
+      <NewHabit
+        create={create}
+        setCreate={setCreate}
+        createHabit={createHabit}
+        loading={loading}
+        setLoading={setLoading}
+      />
       {habits.length === 0 ? (
         <p>
           Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
           começar a trackear!
         </p>
       ) : (
-        habits.map(({ name, days }) => {
-          return <Habit name={name} days={days} />;
+        habits.map((habit, index) => {
+          return (
+            <Habit habit={habit} key={index} deleteHabit={deleteHabit} />
+          );
         })
       )}
     </Main>
@@ -88,22 +99,13 @@ const Main = styled.main`
   & > div {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
   }
-  .button {
-    width: 40px;
-    height: 35px;
-    background-color: var(--light-blue);
-    border-radius: 5px;
-    position: relative;
-  }
 
-  .button ion-icon {
-    color: #ffffff;
-    font-size: 29px;
-    position: absolute;
-    top: 4px;
-    left: 5px;
+  svg {
+    font-size: 35px;
+    color: var(--light-blue);
   }
 `;
 

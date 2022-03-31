@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useState, useContext } from "react";
+import { ThreeDots } from "react-loader-spinner"
 
 import UserContext from "./../assets/contexts/UserContext";
 
@@ -34,10 +35,14 @@ function NewHabit({ create, setCreate, loading, setLoading, createHabit }) {
 
   function submitData(e) {
     e.preventDefault(e);
-    setNewHabit({ ...newHabit });
-    createHabit(newHabit);
-    setLoading(true);
-    resetInputData();
+    if(newHabit.days.length > 0){
+      setNewHabit({ ...newHabit });
+      createHabit(newHabit);
+      setLoading(true);
+      resetInputData();
+    } else{
+      alert("Selecione pelo menos um dia da semana")
+    }
   }
 
   return create ? (
@@ -75,7 +80,7 @@ function NewHabit({ create, setCreate, loading, setLoading, createHabit }) {
             Cancelar
           </button>
           <button className="save" type="submit" disabled={loading} >
-            Salvar
+            {loading ? <ThreeDots color="#FFFFFF" width={40} /> : "Salvar"}
           </button>
         </div>
       </form>
@@ -125,6 +130,9 @@ const Section = styled.section`
     height: 35px;
     border-radius: 5px;
     font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
