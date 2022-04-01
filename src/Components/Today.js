@@ -2,9 +2,11 @@ import styled from "styled-components";
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 
 import UserContext from "./../assets/contexts/UserContext";
 import TodayHabit from "./TodayHabit";
+import 'dayjs/locale/pt-br'
 
 function Today() {
   const TOKEN = localStorage.getItem("token");
@@ -19,17 +21,15 @@ function Today() {
   const [today, setToday] = useState(["empty"]);
   const navigate = useNavigate();
 
+  let date = dayjs().locale("pt-br").format("dddd, DD/MM");
+  date = date[0].toUpperCase() + date.substr(1);
+
   function updateProgress(today){
     if(today.length > 0 && today[0] !== "empty"){
       console.log(today);
-      const total = today.length;
-      let done = 0;
-      today.forEach((habit) =>{
-        if(habit.done === true){
-          done ++;
-        }
-      });
-      const currentProgress = (done/total) * 100;
+      // const total = today.length;
+      const todayDone = today.filter((habit) => habit.done === true);
+      const currentProgress = (todayDone.length/today.length) * 100;
       setProgress(currentProgress);
       console.log(currentProgress);
     }
@@ -59,7 +59,7 @@ function Today() {
     <></>
   ) : (
   <Main color_p={progress === 0 ? "#BABABA" : "var(--green)"}>
-    <h1>Dia de hoje</h1>
+    <h1>{date}</h1>
     <p>{progress === 0 ? "Nenhum hábito concluído ainda" : `${progress.toFixed(0)}% dos hábitos concluídos`}</p>
     <div>
       {today.length>0 ? 

@@ -113,11 +113,15 @@ const GlobalStyle = createGlobalStyle`
         color: var(--dark-blue);
     }
 
-p{
-  color: var(--gray);
-  font-size: 18px;
-  line-height: 22px;
-}
+    p{
+        color: var(--gray);
+        font-size: 18px;
+        line-height: 22px;
+    }
+
+    a{
+        font-family: 'Lexend Deca', sans-serif;
+    }
 `;
 
 export default GlobalStyle;
