@@ -51,8 +51,8 @@ function Habits() {
   }
 
   function deleteHabit(id) {
-    const URLDelete = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`
-    const promise = axios.delete(URLDelete, config);
+    const DELETE_URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`
+    const promise = axios.delete(DELETE_URL, config);
     promise.then(() => {
       requestHabits();
     });

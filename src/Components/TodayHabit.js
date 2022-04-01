@@ -1,18 +1,44 @@
 import styled from "styled-components";
 import { useState, useContext } from "react";
 import { BsCheckSquareFill } from "react-icons/bs";
+import axios from "axios";
 
 import UserContext from "./../assets/contexts/UserContext";
 
-function TodayHabit({ habit }) {
-  const { name, done, currentSequence, highestSequence } = habit;
+function TodayHabit({ habit, config, requestTodayHabits }) {
+  const { name, done, currentSequence, highestSequence, id } = habit;
+
+  function toggleHabit(type) {
+    const CHECK_URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/${type}`;
+    const promise = axios.post(CHECK_URL, {}, config);
+    promise.then(()=>{
+      requestTodayHabits();
+    });
+    promise.catch((err) => {
+      console.log(`${err.response.status} - ${err.response.statusText}`);
+      alert("Um erro aconteceu, tente novamente");
+    });
+  }
 
   return (
-    <Section>
+    <Section
+      color={{
+        check: done ? "var(--green)" : "#EBEBEB",
+        current: done ? "var(--green)" : "var(--gray)",
+        highest:
+          done && currentSequence === highestSequence
+            ? "var(--green)"
+            : "var(--gray)",
+      }}
+    >
       <h3>{name}</h3>
-      <p>Sequência atual: {currentSequence} dias</p>
-      <p>Seu recorde: {highestSequence} dias</p>
-      <BsCheckSquareFill />
+      <p className="sequence">
+        Sequência atual: <span className="current">{currentSequence} dias</span>
+      </p>
+      <p className="sequence">
+        Seu recorde: <span className="highest">{highestSequence} dias</span>
+      </p>
+      <BsCheckSquareFill onClick={() => toggleHabit(done ? "uncheck" : "check")} />
     </Section>
   );
 }
@@ -32,14 +58,22 @@ const Section = styled.section`
     margin-bottom: 7px;
   }
 
-  p {
+  .sequence {
     font-size: 13px;
     line-height: 16px;
-    color: #666666;
+    color: var(--gray);
   }
 
-  svg{
-    color: #EBEBEB;
+  .current {
+    color: ${(props) => props.color.current};
+  }
+
+  .highest {
+    color: ${(props) => props.color.highest};
+  }
+
+  svg {
+    color: ${(props) => props.color.check};
     font-size: 71px;
     position: absolute;
     top: 13px;
