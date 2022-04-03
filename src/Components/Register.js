@@ -25,13 +25,13 @@ function Register() {
     setLoading(true);
     const promise = axios.post(URL, userRegister);
     promise.then(() => {
-        navigate("/");
+      navigate("/");
     });
     promise.catch((err) => {
-        console.log(`${err.response.status} - ${err.response.statusText}`);
-        alert('Erro no cadastro');
-        setLoading(false);
-    })
+      console.log(`${err.response.status} - ${err.response.statusText}`);
+      alert("Erro no cadastro");
+      setLoading(false);
+    });
   }
 
   return (
@@ -99,30 +99,6 @@ const Div = styled.div`
 
   img {
     width: 180px;
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  input,
-  button {
-    width: 303px;
-    height: 45px;
-  }
-
-  button {
-    background-color: var(--light-blue);
-    border-radius: 5px;
-    border: none;
-    color: #ffffff;
-    font-size: 21px;
-    margin-bottom: 26px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   p {

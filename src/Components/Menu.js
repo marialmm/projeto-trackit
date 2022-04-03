@@ -52,7 +52,7 @@ const Footer = styled.footer`
     line-height: 22px;
   }
 
-  a.today{
+  a.today {
     width: 91px;
     height: 120px;
     margin-bottom: 10px;

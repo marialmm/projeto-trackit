@@ -2,14 +2,13 @@ import styled from "styled-components";
 import { BsCheckSquareFill } from "react-icons/bs";
 import axios from "axios";
 
-
 function TodayHabit({ habit, config, requestTodayHabits }) {
   const { name, done, currentSequence, highestSequence, id } = habit;
 
   function toggleHabit(type) {
     const CHECK_URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/${type}`;
     const promise = axios.post(CHECK_URL, {}, config);
-    promise.then(()=>{
+    promise.then(() => {
       requestTodayHabits();
     });
     promise.catch((err) => {
@@ -36,7 +35,9 @@ function TodayHabit({ habit, config, requestTodayHabits }) {
       <p className="sequence">
         Seu recorde: <span className="highest">{highestSequence} dias</span>
       </p>
-      <BsCheckSquareFill onClick={() => toggleHabit(done ? "uncheck" : "check")} />
+      <BsCheckSquareFill
+        onClick={() => toggleHabit(done ? "uncheck" : "check")}
+      />
     </Section>
   );
 }

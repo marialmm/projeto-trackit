@@ -2,34 +2,38 @@ import { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { BsFillPlusSquareFill } from "react-icons/bs";
+import {useNavigate} from "react-router-dom";
 
 import UserContext from "./../assets/contexts/UserContext";
 import Habit from "./Habit";
 import NewHabit from "./NewHabit";
 
 function Habits() {
-  const USER = JSON.parse(localStorage.getItem("user"));
-  const TOKEN = USER.token;
-  const URL =
-    "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
-
   const [habits, setHabits] = useState(["empty"]);
   const [create, setCreate] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { setVisibility } = useContext(UserContext);
+  let { setVisibility, user, requestError } = useContext(UserContext);
+
+  if(localStorage.getItem("user") !== null){
+    user = JSON.parse(localStorage.getItem("user"));
+  } 
+
+  const TOKEN = user.token;
+  const URL =
+    "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
+
   const config = {
     headers: { Authorization: `Bearer ${TOKEN}` },
   };
+
+  const navigate = useNavigate();
 
   function requestHabits() {
     const promise = axios.get(URL, config);
     promise.then((response) => {
       setHabits(response.data);
     });
-    promise.catch((err) => {
-      console.log(`${err.response.status} - ${err.response.statusText}`);
-      alert("Um erro aconteceu, tente novamente");
-    });
+    promise.catch((err) => requestError(err, navigate));
   }
 
   useEffect(() => {
@@ -52,7 +56,7 @@ function Habits() {
   }
 
   function deleteHabit(id) {
-    const DELETE_URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`
+    const DELETE_URL = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`;
     const promise = axios.delete(DELETE_URL, config);
     promise.then(() => {
       requestHabits();
@@ -85,9 +89,7 @@ function Habits() {
         </p>
       ) : (
         habits.map((habit, index) => {
-          return (
-            <Habit habit={habit} key={index} deleteHabit={deleteHabit} />
-          );
+          return <Habit habit={habit} key={index} deleteHabit={deleteHabit} />;
         })
       )}
     </Main>

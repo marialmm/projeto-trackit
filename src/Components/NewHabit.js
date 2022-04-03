@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState, useContext } from "react";
-import { ThreeDots } from "react-loader-spinner"
+import { ThreeDots } from "react-loader-spinner";
 
 import UserContext from "./../assets/contexts/UserContext";
 
@@ -34,18 +34,18 @@ function NewHabit({ create, setCreate, loading, setLoading, createHabit }) {
 
   function submitData(e) {
     e.preventDefault(e);
-    if(newHabit.days.length > 0){
+    if (newHabit.days.length > 0) {
       setNewHabit({ ...newHabit });
       createHabit(newHabit);
       setLoading(true);
       resetInputData();
-    } else{
-      alert("Selecione pelo menos um dia da semana")
+    } else {
+      alert("Selecione pelo menos um dia da semana");
     }
   }
 
   return create ? (
-    <Section >
+    <Section>
       <form onSubmit={(e) => submitData(e)}>
         <input
           type="text"
@@ -56,29 +56,29 @@ function NewHabit({ create, setCreate, loading, setLoading, createHabit }) {
           disabled={loading}
         />
         <div className="days">
-            {weekdays.map((day) => {
+          {weekdays.map((day) => {
             return (
-                <Day
+              <Day
                 key={day.id}
                 color={
-                    newHabit.days.includes(day.id)
+                  newHabit.days.includes(day.id)
                     ? { color: "#CFCFCF", border: "#CFCFCF", font: "#FFFFFF" }
                     : { color: "#FFFFFF", border: "#D4D4D4", font: "#DBDBDB" }
                 }
                 onClick={() => {
-                    if (!loading) selectDay(day.id);
+                  if (!loading) selectDay(day.id);
                 }}
-                >
+              >
                 {day.name}
-                </Day>
+              </Day>
             );
-            })}
+          })}
         </div>
         <div className="buttons">
           <button className="cancel" onClick={(e) => cancelNewHabit(e)}>
             Cancelar
           </button>
-          <button className="save" type="submit" disabled={loading} >
+          <button className="save" type="submit" disabled={loading}>
             {loading ? <ThreeDots color="#FFFFFF" width={40} /> : "Salvar"}
           </button>
         </div>
@@ -90,41 +90,41 @@ function NewHabit({ create, setCreate, loading, setLoading, createHabit }) {
 }
 
 const Section = styled.section`
-    width: 100%;
-    background-color: #FFFFFF;
-    padding: 18px;
-    margin-bottom: 29px;
+  width: 100%;
+  background-color: #ffffff;
+  padding: 18px;
+  margin-bottom: 29px;
 
-  .days{
+  .days {
     display: flex;
     justify-content: space-between;
     width: 234px;
     margin-bottom: 29px;
   }
 
-  input{
-      width: 100%;
+  input {
+    width: 100%;
   }
 
-  .buttons{
+  .buttons {
     display: flex;
     justify-content: flex-end;
     width: 100%;
   }
 
-  .cancel{
+  .cancel {
     border: none;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     color: var(--light-blue);
     font-size: 16px;
     padding: 0px;
     margin-right: 23px;
   }
 
-  .save{
+  .save {
     border: none;
     background-color: var(--light-blue);
-    color: #FFFFFF;
+    color: #ffffff;
     width: 84px;
     height: 35px;
     border-radius: 5px;

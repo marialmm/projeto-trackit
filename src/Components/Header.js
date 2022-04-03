@@ -5,9 +5,12 @@ import UserContext from "./../assets/contexts/UserContext";
 import trackit from "./../assets/midias/TrackIt.png";
 
 function Header() {
-  const { visibility } = useContext(UserContext);
-  const USER = JSON.parse(localStorage.getItem("user"));
-  const image = USER!== null ? USER.image : "";
+  let { visibility, user } = useContext(UserContext);
+  
+  if(localStorage.getItem("user") !== null){
+    user = JSON.parse(localStorage.getItem("user"));
+  } 
+  const image = user !== null ? user.image : "";
 
   return visibility ? (
     <Div>
@@ -39,8 +42,8 @@ const Div = styled.header`
 
   img:last-child {
     width: 51px;
-height: 51px;
-border-radius: 98.5px;
+    height: 51px;
+    border-radius: 98.5px;
   }
 `;
 

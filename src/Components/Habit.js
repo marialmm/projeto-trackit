@@ -7,14 +7,18 @@ import UserContext from "./../assets/contexts/UserContext";
 function Habit({ habit, deleteHabit }) {
   const { weekdays } = useContext(UserContext);
 
-  const {name, id, days} = habit 
-  
+  const { name, id, days } = habit;
+
   return (
     <Section>
       <p>{name}</p>
-      <BsTrash className="trash" onClick={()=>{
-        if (window.confirm('Tem certeza que deseja apagar o hábito?')) deleteHabit(id)}}
-         />
+      <BsTrash
+        className="trash"
+        onClick={() => {
+          if (window.confirm("Tem certeza que deseja apagar o hábito?"))
+            deleteHabit(id);
+        }}
+      />
       <div>
         {weekdays.map((day) => {
           return (
@@ -60,15 +64,15 @@ const Section = styled.section`
 `;
 
 const Div = styled.div`
-    background-color: ${props => props.color.color};
-    border: 1px solid ${props => props.color.border};
-    color: ${props => props.color.font};
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 5px;
+  background-color: ${(props) => props.color.color};
+  border: 1px solid ${(props) => props.color.border};
+  color: ${(props) => props.color.font};
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
 `;
 
 export default Habit;

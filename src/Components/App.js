@@ -44,11 +44,24 @@ function App() {
     },
   ];
   const [progress, setProgress] = useState(0);
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+    connected: false,
+  });
+
+  function requestError(err, navigate){
+    console.log(`${err.response.status} - ${err.response.statusText}`);
+    alert("Um erro aconteceu, tente novamente");
+    navigate("/");
+  }
 
   return (
     <>
       <GlobalStyle />
-      <UserContext.Provider value={{ visibility, setVisibility, weekdays, progress, setProgress }}>
+      <UserContext.Provider
+        value={{ visibility, setVisibility, weekdays, progress, setProgress, user, setUser, requestError }}
+      >
         <BrowserRouter>
           <Header />
           <Routes>

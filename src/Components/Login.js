@@ -8,15 +8,15 @@ import UserContext from "./../assets/contexts/UserContext";
 import logo from "./../assets/midias/Logo.png";
 
 function Login() {
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-    connected: false,
-  });
+  // const [user, setUser] = useState({
+  //   email: "",
+  //   password: "",
+  //   connected: false,
+  // });
   const [login, setLogin] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const { setVisibility } = useContext(UserContext);
+  const { setVisibility, user, setUser } = useContext(UserContext);
   setVisibility(false);
   const navigate = useNavigate();
 
@@ -24,7 +24,6 @@ function Login() {
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
 
   function autoLogin() {
-    console.log("vendo se tem informações");
     const USER = JSON.parse(localStorage.getItem("user"));
     if (USER !== null && USER.connected === true) {
       const userData = {
@@ -45,6 +44,7 @@ function Login() {
     const promise = axios.post(URL, loginData);
     promise.then((response) => {
       setLogin({ ...response.data, connected });
+      setUser({ ...response.data});
       navigate("/hoje");
     });
     promise.catch((err) => {
@@ -60,7 +60,7 @@ function Login() {
   }
 
   useEffect(() => {
-    if (Object.keys(login).length !== 0) {
+    if (Object.keys(login).length !== 0 && login.connected === true) {
       localStorage.setItem("user", JSON.stringify(login));
       console.log(login);
     }
@@ -94,7 +94,7 @@ function Login() {
           <input
             type="checkbox"
             id="keepConnected"
-            value={user.emailconnected}
+            value={user.connected}
             name="connected"
             onChange={(e) => setUser({ ...user, connected: !user.connected })}
             disabled={loading}
@@ -122,42 +122,6 @@ const Div = styled.div`
 
   img {
     width: 180px;
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  input,
-  button {
-    width: 303px;
-    height: 45px;
-  }
-
-  input {
-    margin-bottom: 6px;
-    padding: 10px;
-    border: 1px solid #d5d5d5;
-    border-radius: 5px;
-  }
-
-  input::placeholder {
-    color: #dbdbdb;
-    font-size: 20px;
-  }
-
-  button {
-    background-color: var(--light-blue);
-    border-radius: 5px;
-    border: none;
-    color: #ffffff;
-    font-size: 21px;
-    margin-bottom: 26px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   form > div {

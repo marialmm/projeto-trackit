@@ -75,6 +75,30 @@ const GlobalStyle = createGlobalStyle`
         width: 100%;
         height: 100%;
     }
+    
+    form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+
+    input,
+    button {
+        width: 303px;
+        height: 45px;
+    }
+
+    form button {
+        background-color: var(--light-blue);
+        border-radius: 5px;
+        border: none;
+        color: #ffffff;
+        font-size: 21px;
+        margin-bottom: 26px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
     input {
         margin-bottom: 6px;
