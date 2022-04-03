@@ -104,7 +104,7 @@ const GlobalStyle = createGlobalStyle`
 
     main{
         margin: 70px 0;
-        padding: 28px 17px 70px;
+        padding: 28px 20px 70px;
     }
 
     h1{
@@ -121,6 +121,7 @@ const GlobalStyle = createGlobalStyle`
 
     a{
         font-family: 'Lexend Deca', sans-serif;
+        text-decoration-color: var(--light-blue);
     }
 `;
 

@@ -1,9 +1,7 @@
 import styled from "styled-components";
-import { useState, useContext } from "react";
 import { BsCheckSquareFill } from "react-icons/bs";
 import axios from "axios";
 
-import UserContext from "./../assets/contexts/UserContext";
 
 function TodayHabit({ habit, config, requestTodayHabits }) {
   const { name, done, currentSequence, highestSequence, id } = habit;

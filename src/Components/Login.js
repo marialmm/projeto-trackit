@@ -11,10 +11,10 @@ function Login() {
   const [user, setUser] = useState({
     email: "",
     password: "",
+    connected: false,
   });
   const [login, setLogin] = useState({});
   const [loading, setLoading] = useState(false);
-  const [connected, setConnected] = useState(false);
 
   const { setVisibility } = useContext(UserContext);
   setVisibility(false);
@@ -23,25 +23,28 @@ function Login() {
   const URL =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
 
-  
-  function autoLogin(){
-    console.log('vendo se tem informações')
+  function autoLogin() {
+    console.log("vendo se tem informações");
     const USER = JSON.parse(localStorage.getItem("user"));
-    if(USER !== null && USER.connected === true){
-      const userData={
+    if (USER !== null && USER.connected === true) {
+      const userData = {
         email: USER.email,
-        password: USER.password
-      }
+        password: USER.password,
+        connected: USER.connected,
+      };
       requestLogin(userData);
     }
-    
   }
 
-  function requestLogin(userData){
+  function requestLogin({ email, password, connected }) {
     setLoading(true);
-    const promise = axios.post(URL, userData);
+    const loginData = {
+      email,
+      password,
+    };
+    const promise = axios.post(URL, loginData);
     promise.then((response) => {
-      setLogin({...response.data, connected});
+      setLogin({ ...response.data, connected });
       navigate("/hoje");
     });
     promise.catch((err) => {
@@ -56,15 +59,16 @@ function Login() {
     requestLogin(user);
   }
 
-  useEffect(()=>{
-    if(Object.keys(login).length !== 0){
+  useEffect(() => {
+    if (Object.keys(login).length !== 0) {
       localStorage.setItem("user", JSON.stringify(login));
-      console.log(login)}
+      console.log(login);
+    }
   }, [login]);
 
-  useEffect(()=>{
-    autoLogin()
-  }, [])
+  useEffect(() => {
+    autoLogin();
+  }, []);
 
   return (
     <Div>
@@ -90,9 +94,9 @@ function Login() {
           <input
             type="checkbox"
             id="keepConnected"
-            value={connected}
+            value={user.emailconnected}
             name="connected"
-            onChange={(e) => setConnected(!connected)}
+            onChange={(e) => setUser({ ...user, connected: !user.connected })}
             disabled={loading}
           />
           <label htmlFor="keepConnected">Mantenha-me conectado</label>

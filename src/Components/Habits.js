@@ -16,7 +16,7 @@ function Habits() {
   const [habits, setHabits] = useState(["empty"]);
   const [create, setCreate] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { setVisibility, weekdays } = useContext(UserContext);
+  const { setVisibility } = useContext(UserContext);
   const config = {
     headers: { Authorization: `Bearer ${TOKEN}` },
   };

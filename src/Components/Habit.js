@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { BsTrash } from "react-icons/bs";
-import axios from "axios";
 
 import UserContext from "./../assets/contexts/UserContext";
 
