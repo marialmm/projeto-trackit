@@ -10,7 +10,8 @@ function History() {
   const [history, setHistory] = useState([]);
   const URL =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/history/daily";
-  const TOKEN = localStorage.getItem("token");
+  const USER = JSON.parse(localStorage.getItem("user"));
+  const TOKEN = USER.token;
   const config = {
     headers: { Authorization: `Bearer ${TOKEN}` },
   };

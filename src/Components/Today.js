@@ -6,10 +6,11 @@ import dayjs from "dayjs";
 
 import UserContext from "./../assets/contexts/UserContext";
 import TodayHabit from "./TodayHabit";
-import 'dayjs/locale/pt-br'
+import 'dayjs/locale/pt-br';
 
 function Today() {
-  const TOKEN = localStorage.getItem("token");
+  const USER = JSON.parse(localStorage.getItem("user"));
+  const TOKEN = USER.token;
   const URL =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
 
@@ -26,12 +27,9 @@ function Today() {
 
   function updateProgress(today){
     if(today.length > 0 && today[0] !== "empty"){
-      console.log(today);
-      // const total = today.length;
       const todayDone = today.filter((habit) => habit.done === true);
       const currentProgress = (todayDone.length/today.length) * 100;
       setProgress(currentProgress);
-      console.log(currentProgress);
     }
     
   }

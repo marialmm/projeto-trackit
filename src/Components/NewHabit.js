@@ -5,7 +5,6 @@ import { ThreeDots } from "react-loader-spinner"
 import UserContext from "./../assets/contexts/UserContext";
 
 function NewHabit({ create, setCreate, loading, setLoading, createHabit }) {
-//   const [loading, setLoading] = useState(false);
   const [newHabit, setNewHabit] = useState({
     name: "",
     days: [],

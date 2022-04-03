@@ -8,7 +8,8 @@ import Habit from "./Habit";
 import NewHabit from "./NewHabit";
 
 function Habits() {
-  const TOKEN = localStorage.getItem("token");
+  const USER = JSON.parse(localStorage.getItem("user"));
+  const TOKEN = USER.token;
   const URL =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
 

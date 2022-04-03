@@ -6,7 +6,8 @@ import trackit from "./../assets/midias/TrackIt.png";
 
 function Header() {
   const { visibility } = useContext(UserContext);
-  const image = localStorage.getItem("image");
+  const USER = JSON.parse(localStorage.getItem("user"));
+  const image = USER!== null ? USER.image : "";
 
   return visibility ? (
     <Div>
