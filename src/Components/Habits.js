@@ -44,6 +44,7 @@ function Habits() {
     const promise = axios.post(URL, habit, config);
     promise.then((response) => {
       requestHabits();
+      // requestTodayHabits(config);
       setCreate(false);
       setLoading(false);
     });

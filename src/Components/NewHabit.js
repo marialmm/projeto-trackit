@@ -90,8 +90,12 @@ function NewHabit({ create, setCreate, loading, setLoading, createHabit }) {
 const Section = styled.section`
   width: 100%;
   background-color: #ffffff;
-  padding: 18px;
+  padding: 18px 18px 5px;
   margin-bottom: 29px;
+
+  form{
+    display: block;
+  }
 
   .days {
     display: flex;
@@ -110,6 +114,10 @@ const Section = styled.section`
     width: 100%;
   }
 
+  button{
+    margin-bottom: 0px;
+  }
+
   .cancel {
     border: none;
     background-color: #ffffff;
@@ -117,6 +125,7 @@ const Section = styled.section`
     font-size: 16px;
     padding: 0px;
     margin-right: 23px;
+    width: fit-content;
   }
 
   .save {

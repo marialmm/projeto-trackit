@@ -44,6 +44,7 @@ const Footer = styled.footer`
   justify-content: space-around;
   background-color: #ffffff;
   z-index: 2;
+  box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15);
 
   a {
     color: var(--dark-blue);
