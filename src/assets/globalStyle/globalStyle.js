@@ -128,7 +128,7 @@ const GlobalStyle = createGlobalStyle`
 
     main{
         margin: 70px 0;
-        padding: 28px 20px 70px;
+        padding: 28px 20px 100px;
     }
 
     h1{

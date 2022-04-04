@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Calendar from "react-calendar";
 import dayjs from "dayjs";
@@ -8,20 +8,26 @@ import dayjs from "dayjs";
 import UserContext from "./../assets/contexts/UserContext";
 import "react-calendar/dist/Calendar.css";
 import "dayjs/locale/pt-br";
+import Details from "./Details";
 
 function History() {
   let { setVisibility, user, requestError } = useContext(UserContext);
-
-  if(localStorage.getItem("user") !== null){
-    user = JSON.parse(localStorage.getItem("user"));
-  } 
-
   const [history, setHistory] = useState([]);
   const [date, setDate] = useState(new Date());
   const [daysTracked, setDaysTracked] = useState({
     conclued: [],
     notConclued: [],
   });
+  const [details, setDetails] = useState({
+    show: false,
+    day: "",
+    habits: [],
+  });
+  const navigate = useNavigate();
+
+  if (localStorage.getItem("user") !== null) {
+    user = JSON.parse(localStorage.getItem("user"));
+  }
 
   const URL =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/history/daily";
@@ -30,13 +36,10 @@ function History() {
     headers: { Authorization: `Bearer ${TOKEN}` },
   };
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     setVisibility(true);
     const promise = axios.get(URL, config);
     promise.then((response) => {
-      console.log(response.data);
       setHistory(response.data);
     });
     promise.catch((err) => requestError(err, navigate));
@@ -68,6 +71,18 @@ function History() {
     }
   }
 
+  function showDetails(date) {
+    date = dayjs(date).locale("pt-br").format("DD/MM/YYYY");
+    let flag = false;
+    history.forEach((day) => {
+      if (day.day === date) {
+        setDetails({ ...details, show: true, habits: day.habits, day: date });
+        flag = flag || true;
+      }
+    });
+    if (!flag) setDetails({ ...details, show: false });
+  }
+
   return (
     <Main>
       <h1>Histórico</h1>
@@ -79,9 +94,7 @@ function History() {
           onChange={setDate}
           calendarType="US"
           formatDay={(locate, date) => dayjs(date).format("DD")}
-          onClickDay={(date) =>
-            console.log(dayjs(date).locale("pt-br").format("DD/MM/YYYY"))
-          }
+          onClickDay={(date) => showDetails(date)}
           tileClassName={({ date }) => {
             if (formatDate(date) === "notConclued") {
               return "notConclued";
@@ -91,6 +104,7 @@ function History() {
           }}
         />
       )}
+      {details.show ? <Details details={details} /> : <></>}
     </Main>
   );
 }

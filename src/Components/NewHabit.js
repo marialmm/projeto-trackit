@@ -5,12 +5,11 @@ import { ThreeDots } from "react-loader-spinner";
 import UserContext from "./../assets/contexts/UserContext";
 
 function NewHabit({ create, setCreate, loading, setLoading, createHabit }) {
+  const { weekdays } = useContext(UserContext);
   const [newHabit, setNewHabit] = useState({
     name: "",
     days: [],
   });
-
-  const { weekdays } = useContext(UserContext);
 
   function selectDay(id) {
     const updatedDay = newHabit.days.includes(id)

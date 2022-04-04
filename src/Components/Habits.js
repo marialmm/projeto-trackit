@@ -9,10 +9,11 @@ import Habit from "./Habit";
 import NewHabit from "./NewHabit";
 
 function Habits() {
+  let { setVisibility, user, requestError } = useContext(UserContext);
   const [habits, setHabits] = useState(["empty"]);
   const [create, setCreate] = useState(false);
   const [loading, setLoading] = useState(false);
-  let { setVisibility, user, requestError } = useContext(UserContext);
+  const navigate = useNavigate();
 
   if(localStorage.getItem("user") !== null){
     user = JSON.parse(localStorage.getItem("user"));
@@ -26,7 +27,10 @@ function Habits() {
     headers: { Authorization: `Bearer ${TOKEN}` },
   };
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    setVisibility(true);
+    requestHabits();
+  }, []);
 
   function requestHabits() {
     const promise = axios.get(URL, config);
@@ -35,11 +39,6 @@ function Habits() {
     });
     promise.catch((err) => requestError(err, navigate));
   }
-
-  useEffect(() => {
-    setVisibility(true);
-    requestHabits();
-  }, []);
 
   function createHabit(habit) {
     const promise = axios.post(URL, habit, config);

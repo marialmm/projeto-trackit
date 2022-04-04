@@ -10,6 +10,7 @@ function Header() {
   if(localStorage.getItem("user") !== null){
     user = JSON.parse(localStorage.getItem("user"));
   } 
+  
   const image = user !== null ? user.image : "";
 
   return visibility ? (

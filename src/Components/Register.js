@@ -13,7 +13,6 @@ function Register() {
     name: "",
     image: "",
   });
-
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 

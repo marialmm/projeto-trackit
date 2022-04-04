@@ -9,25 +9,29 @@ import TodayHabit from "./TodayHabit";
 import "dayjs/locale/pt-br";
 
 function Today() {
-  let { setVisibility, progress, setProgress, user, requestError } = useContext(UserContext);
-
-  if(localStorage.getItem("user") !== null){
-    user = JSON.parse(localStorage.getItem("user"));
-  } 
-
+  let { setVisibility, progress, setProgress, user, requestError } =
+    useContext(UserContext);
   const [today, setToday] = useState(["empty"]);
+  const navigate = useNavigate();
+
+  if (localStorage.getItem("user") !== null) {
+    user = JSON.parse(localStorage.getItem("user"));
+  }
+
   const TOKEN = user.token;
   const URL =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
-
   const config = {
     headers: { Authorization: `Bearer ${TOKEN}` },
   };
 
-  const navigate = useNavigate();
-
   let date = dayjs().locale("pt-br").format("dddd, DD/MM");
   date = date[0].toUpperCase() + date.substr(1);
+
+  useEffect(() => {
+    setVisibility(true);
+    requestTodayHabits();
+  }, []);
 
   function updateProgress(today) {
     if (today.length > 0 && today[0] !== "empty") {
@@ -45,11 +49,6 @@ function Today() {
     });
     promise.catch((err) => requestError(err, navigate));
   }
-
-  useEffect(() => {
-    setVisibility(true);
-    requestTodayHabits();
-  }, []);
 
   return today[0] === "empty" ? (
     <></>

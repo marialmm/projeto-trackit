@@ -8,20 +8,25 @@ import UserContext from "./../assets/contexts/UserContext";
 import logo from "./../assets/midias/Logo.png";
 
 function Login() {
-  // const [user, setUser] = useState({
-  //   email: "",
-  //   password: "",
-  //   connected: false,
-  // });
+  const { setVisibility, user, setUser, requestError } = useContext(UserContext);
   const [login, setLogin] = useState({});
   const [loading, setLoading] = useState(false);
-
-  const { setVisibility, user, setUser } = useContext(UserContext);
-  setVisibility(false);
   const navigate = useNavigate();
+
+  setVisibility(false);
 
   const URL =
     "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
+
+  useEffect(() => {
+    if (Object.keys(login).length !== 0 && login.connected === true) {
+      localStorage.setItem("user", JSON.stringify(login));
+    }
+  }, [login]);
+
+  useEffect(() => {
+    autoLogin();
+  }, []);
 
   function autoLogin() {
     const USER = JSON.parse(localStorage.getItem("user"));
@@ -44,13 +49,11 @@ function Login() {
     const promise = axios.post(URL, loginData);
     promise.then((response) => {
       setLogin({ ...response.data, connected });
-      setUser({ ...response.data});
+      setUser({ ...response.data });
       navigate("/hoje");
     });
     promise.catch((err) => {
-      alert("Email ou senha incorretos");
-      console.log(`${err.response.status} - ${err.response.statusText}`);
-      setLoading(false);
+      requestError(err, navigate)
     });
   }
 
@@ -58,17 +61,6 @@ function Login() {
     e.preventDefault();
     requestLogin(user);
   }
-
-  useEffect(() => {
-    if (Object.keys(login).length !== 0 && login.connected === true) {
-      localStorage.setItem("user", JSON.stringify(login));
-      console.log(login);
-    }
-  }, [login]);
-
-  useEffect(() => {
-    autoLogin();
-  }, []);
 
   return (
     <Div>
