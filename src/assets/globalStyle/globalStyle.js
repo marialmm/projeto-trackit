@@ -126,6 +126,10 @@ const GlobalStyle = createGlobalStyle`
         opacity: 0.7;
     }
 
+    button:hover{
+        cursor: pointer;
+    }
+
     main{
         margin: 70px 0;
         padding: 28px 20px 100px;

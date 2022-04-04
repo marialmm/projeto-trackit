@@ -20,7 +20,6 @@ function NewHabit({ create, setCreate, loading, setLoading, createHabit }) {
 
   function cancelNewHabit(e) {
     e.preventDefault();
-    resetInputData();
     setCreate(false);
   }
 
