@@ -8,7 +8,7 @@ import UserContext from "./../assets/contexts/UserContext";
 import logo from "./../assets/midias/Logo.png";
 
 function Login() {
-  const { setVisibility, user, setUser, requestError } = useContext(UserContext);
+  const { setVisibility, user, setUser } = useContext(UserContext);
   const [login, setLogin] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -53,7 +53,9 @@ function Login() {
       navigate("/hoje");
     });
     promise.catch((err) => {
-      requestError(err, navigate)
+      alert("Email ou senha incorretos");
+      console.log(`${err.response.status} - ${err.response.statusText}`);
+      setLoading(false);
     });
   }
 
