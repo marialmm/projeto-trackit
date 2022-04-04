@@ -77,9 +77,9 @@ const GlobalStyle = createGlobalStyle`
     }
     
     form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     input,
@@ -106,6 +106,7 @@ const GlobalStyle = createGlobalStyle`
         border: 1px solid #d5d5d5;
         border-radius: 5px;
         color: var(--gray);
+        font-size: 20px;
     }
 
     input::placeholder {
@@ -132,7 +133,7 @@ const GlobalStyle = createGlobalStyle`
 
     main{
         margin: 70px 0;
-        padding: 28px 20px 100px;
+        padding: 28px 20px 105px;
     }
 
     h1{

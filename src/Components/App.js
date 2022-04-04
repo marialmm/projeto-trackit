@@ -19,7 +19,6 @@ function App() {
     password: "",
     connected: false,
   });
-  const [today, setToday] = useState(["empty"]);
 
   const weekdays = [
     {
@@ -70,8 +69,6 @@ function App() {
           setProgress,
           user,
           setUser,
-          today,
-          setToday,
           requestError
         }}
       >

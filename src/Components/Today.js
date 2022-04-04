@@ -9,9 +9,9 @@ import TodayHabit from "./TodayHabit";
 import "dayjs/locale/pt-br";
 
 function Today() {
-  let { setVisibility, progress, setProgress, user, today, setToday, requestError } =
+  let { setVisibility, progress, setProgress, user, requestError } =
     useContext(UserContext);
-  // const [today, setToday] = useState(["empty"]);
+  const [today, setToday] = useState(["empty"]);
   const navigate = useNavigate();
 
   if (localStorage.getItem("user") !== null) {
@@ -30,7 +30,7 @@ function Today() {
 
   useEffect(() => {
     setVisibility(true);
-    requestTodayHabits(config);
+    requestTodayHabits();
   }, []);
 
   function updateProgress(today) {
